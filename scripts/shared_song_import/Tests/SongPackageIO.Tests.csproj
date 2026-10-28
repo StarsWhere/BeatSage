@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <GameRoot Condition="'$(GameRoot)' == ''">$(BEAT_SABER_DIR)</GameRoot>
+    <TargetFramework>net472</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <LangVersion>12</LangVersion>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
+    <AssemblyName>SongPackageIO.Tests</AssemblyName>
+    <OutputPath Condition="'$(OutputPath)' == ''">$(RepoRoot)\.tmp\song-package-io-tests\build\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <EnableFrameworkPathOverride>true</EnableFrameworkPathOverride>
+    <FrameworkPathOverride>$(GameRoot)\Beat Saber_Data\Managed</FrameworkPathOverride>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SongPackageIO.csproj" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(GameRoot)\Libs\Newtonsoft.Json.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+  </ItemGroup>
+</Project>

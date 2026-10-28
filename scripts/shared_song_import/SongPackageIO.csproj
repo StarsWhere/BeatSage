@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <GameRoot Condition="'$(GameRoot)' == ''">$(BEAT_SABER_DIR)</GameRoot>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>12</LangVersion>
+    <AssemblyName>SongPackageIO</AssemblyName>
+    <RootNamespace>SongPackageIO</RootNamespace>
+    <OutputPath Condition="'$(OutputPath)' == ''">$(RepoRoot)\.tmp\beatsage-mod\build\shared\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Deterministic>true</Deterministic>
+    <DebugType>portable</DebugType>
+    <EnableFrameworkPathOverride>true</EnableFrameworkPathOverride>
+    <FrameworkPathOverride>$(GameRoot)\Beat Saber_Data\Managed</FrameworkPathOverride>
+    <NoWarn>$(NoWarn);CS0618</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(GameRoot)\Libs\Newtonsoft.Json.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Compile Remove="Tests/**/*.cs" />
+  </ItemGroup>
+</Project>
