@@ -1,0 +1,96 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>12</LangVersion>
+    <PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>BeatSage</AssemblyName>
+    <RootNamespace>BeatSage</RootNamespace>
+    <Version>0.2.2</Version>
+    <InformationalVersion>0.2.2+bs1.45.2</InformationalVersion>
+    <EnableFrameworkPathOverride>true</EnableFrameworkPathOverride>
+    <FrameworkPathOverride>$(GameRoot)/Beat Saber_Data/Managed</FrameworkPathOverride>
+    <BaseOutputPath Condition="'$(BaseOutputPath)' == ''">$(RepoRoot)/.tmp/beatsage-mod/build/</BaseOutputPath>
+    <OutputPath Condition="'$(OutputPath)' == ''">$(BaseOutputPath)bin/</OutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)' == ''">$(RepoRoot)/.tmp/beatsage-mod/build/obj/</BaseIntermediateOutputPath>
+    <IntermediateOutputPath Condition="'$(IntermediateOutputPath)' == ''">$(BaseIntermediateOutputPath)$(Configuration)/</IntermediateOutputPath>
+    <SharedSongImportIntermediateOutputPath Condition="'$(SharedSongImportIntermediateOutputPath)' == ''">$(RepoRoot)/.tmp/beatsage-mod/build/shared-obj/</SharedSongImportIntermediateOutputPath>
+    <SharedSongImportOutputPath Condition="'$(SharedSongImportOutputPath)' == ''">$(RepoRoot)/.tmp/beatsage-mod/build/shared/</SharedSongImportOutputPath>
+    <LocalModUIPath Condition="'$(LocalModUIPath)' == ''">$(SharedRoot)/.tmp/local-mod-ui/build/LocalModUI.dll</LocalModUIPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Deterministic>true</Deterministic>
+    <DebugType>portable</DebugType>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <DefaultItemExcludes>$(DefaultItemExcludes);obj/**;bin/**</DefaultItemExcludes>
+    <NoWarn>$(NoWarn);CS0649;CS0414;CS0618;NU1701</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net472" Version="1.0.3" PrivateAssets="all" />
+    <PackageReference Include="NJsonSchema" Version="11.6.1" />
+    <PackageReference Include="TagLibSharp" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Main"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/Main.dll</HintPath><Private>false</Private><Publicize>true</Publicize></Reference>
+    <Reference Include="DataModels"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/DataModels.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BeatmapCore"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/BeatmapCore.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="GameplayCore"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/GameplayCore.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BeatSaber.ViewSystem"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/BeatSaber.ViewSystem.dll</HintPath><Private>false</Private><Publicize>true</Publicize></Reference>
+    <Reference Include="BGLib.AppFlow"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/BGLib.AppFlow.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BGLib.UnityExtension"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/BGLib.UnityExtension.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="IPA.Loader"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/IPA.Loader.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="HMUI"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/HMUI.dll</HintPath><Private>false</Private><Publicize>true</Publicize></Reference>
+    <Reference Include="HMLib"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/HMLib.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="VRUI"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/VRUI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="VRUI.Interfaces"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/VRUI.Interfaces.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Zenject"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/Zenject.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.UI"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/UnityEngine.UI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.UIModule"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/UnityEngine.UIModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.TextRenderingModule"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/UnityEngine.TextRenderingModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AudioModule"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/UnityEngine.AudioModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.ImageConversionModule"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/UnityEngine.ImageConversionModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Unity.TextMeshPro"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/Unity.TextMeshPro.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="netstandard"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/netstandard.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="System.Net.Http"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/System.Net.Http.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="System.IO.Compression"><HintPath>$(GameRoot)/Libs/System.IO.Compression.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="System.IO.Compression.FileSystem"><HintPath>$(GameRoot)/Libs/System.IO.Compression.FileSystem.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>$(GameRoot)/Libs/0Harmony.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Newtonsoft.Json"><HintPath>$(GameRoot)/Libs/Newtonsoft.Json.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BS_Utils"><HintPath>$(GameRoot)/Plugins/BS_Utils.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="SongCore"><HintPath>$(GameRoot)/Plugins/SongCore.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BSML"><HintPath>$(GameRoot)/Plugins/BSML.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BeatSaberPlaylistsLib"><HintPath>$(GameRoot)/Libs/BeatSaberPlaylistsLib.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="LocalModUI"><HintPath>$(LocalModUIPath)</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ContractGenerator/**/*.cs" />
+    <Compile Remove="Tests/**/*.cs" />
+    <Compile Remove="RuntimeChecks/**/*.cs" />
+    <Compile Remove="obj/**/*.cs;bin/**/*.cs" />
+    <Compile Include="$(ContractGeneratedDirectory)/**/*.cs" Condition="'$(ContractGeneratedDirectory)' != '' and Exists('$(ContractGeneratedDirectory)')" />
+    <Compile Include="$(SharedRoot)/scripts/shared_http_contracts/JsonContractRegistry.cs" Link="Shared/JsonContractRegistry.cs" />
+    <EmbeddedResource Include="UI/**/*.bsml">
+      <LogicalName>BeatSage.UI.%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contracts/contracts.schema.json">
+      <LogicalName>BeatSage.Contracts.schema.json</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contracts/endpoints.json">
+      <LogicalName>BeatSage.Contracts.endpoints.json</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="manifest.json">
+      <LogicalName>BeatSage.manifest.json</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../shared_song_import/SongPackageIO.csproj" Condition="Exists('../shared_song_import/SongPackageIO.csproj') and '$(SkipSharedSongImport)' != 'true'">
+      <AdditionalProperties>BaseIntermediateOutputPath=$(SharedSongImportIntermediateOutputPath);OutputPath=$(SharedSongImportOutputPath);FrameworkPathOverride=$(FrameworkPathOverride)</AdditionalProperties>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

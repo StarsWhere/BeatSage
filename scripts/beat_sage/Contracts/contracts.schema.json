@@ -1,0 +1,833 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "ContractDocument",
+  "type": "object",
+  "properties": {
+    "state": {
+      "$ref": "#/definitions/AppState"
+    },
+    "createRequest": {
+      "$ref": "#/definitions/CreateRequest"
+    },
+    "createResponse": {
+      "$ref": "#/definitions/CreateResponse"
+    },
+    "heartbeat": {
+      "$ref": "#/definitions/HeartbeatResponse"
+    },
+    "audio": {
+      "$ref": "#/definitions/AudioItem"
+    },
+    "browser": {
+      "$ref": "#/definitions/BrowserEntry"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Difficulty": {
+      "type": "string",
+      "enum": [
+        "Normal",
+        "Hard",
+        "Expert",
+        "ExpertPlus"
+      ],
+      "x-labels": [
+        "Normal",
+        "Hard",
+        "Expert",
+        "Expert+"
+      ]
+    },
+    "Mode": {
+      "type": "string",
+      "enum": [
+        "Standard",
+        "NoArrows",
+        "OneSaber",
+        "90Degree"
+      ],
+      "x-labels": [
+        "Standard",
+        "No Arrows",
+        "One Saber",
+        "90 Degree"
+      ]
+    },
+    "Model": {
+      "type": "string",
+      "enum": [
+        "v2",
+        "v2-flow",
+        "v1"
+      ],
+      "x-labels": [
+        "V2",
+        "V2 Flow",
+        "V1"
+      ]
+    },
+    "SongEvent": {
+      "type": "string",
+      "enum": [
+        "Bombs",
+        "DotBlocks",
+        "Obstacles"
+      ],
+      "x-labels": [
+        "Bombs",
+        "Dot Blocks",
+        "Obstacles"
+      ]
+    },
+    "JobState": {
+      "type": "string",
+      "enum": [
+        "Queued",
+        "Preflight",
+        "Uploading",
+        "SubmissionUnknown",
+        "RemotePending",
+        "LoadingAudio",
+        "CreatingLevel",
+        "FormattingLevel",
+        "Downloading",
+        "ReadyToImport",
+        "Importing",
+        "WaitingForLibrary",
+        "Imported",
+        "Cancelled",
+        "RetryNeeded",
+        "FileError",
+        "Failed"
+      ],
+      "x-labels": [
+        "Queued",
+        "Preflight",
+        "Uploading",
+        "Submission Unknown",
+        "Remote Queue",
+        "Loading Audio",
+        "Creating Level",
+        "Formatting",
+        "Downloading",
+        "Ready to Import",
+        "Importing",
+        "Waiting for Library",
+        "Imported",
+        "Cancelled",
+        "Retry Needed",
+        "File Error",
+        "Failed"
+      ]
+    },
+    "GenerationOptions": {
+      "type": "object",
+      "properties": {
+        "difficulties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Difficulty"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "modes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Mode"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "model": {
+          "$ref": "#/definitions/Model"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SongEvent"
+          },
+          "uniqueItems": true
+        },
+        "environment": {
+          "type": "string",
+          "default": "DefaultEnvironment",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "difficulties",
+        "modes",
+        "model",
+        "events",
+        "environment"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "properties": {
+            "model": {
+              "enum": [
+                "v2",
+                "v2-flow"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "model": {
+              "enum": [
+                "v1"
+              ]
+            },
+            "modes": {
+              "items": {
+                "enum": [
+                  "Standard",
+                  "NoArrows",
+                  "OneSaber"
+                ]
+              }
+            },
+            "events": {
+              "items": {
+                "enum": [
+                  "Bombs",
+                  "DotBlocks"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Settings": {
+      "type": "object",
+      "properties": {
+        "autoImport": {
+          "type": "boolean"
+        },
+        "autoPlaylist": {
+          "type": "boolean",
+          "default": true
+        },
+        "retainZip": {
+          "type": "boolean"
+        },
+        "resumeOnStart": {
+          "type": "boolean"
+        },
+        "recursive": {
+          "type": "boolean"
+        },
+        "enabledFormats": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              ".mp3",
+              ".flac",
+              ".wav",
+              ".ogg",
+              ".aac",
+              ".aiff",
+              ".aif"
+            ]
+          }
+        },
+        "favorites": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "lastDirectory": {
+          "type": "string",
+          "default": ""
+        },
+        "defaultOptions": {
+          "$ref": "#/definitions/GenerationOptions"
+        },
+        "pollSeconds": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 30
+        },
+        "requestSeconds": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 120
+        },
+        "transferSeconds": {
+          "type": "integer",
+          "minimum": 30,
+          "maximum": 900
+        },
+        "generationMinutes": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 60
+        },
+        "safeRetries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        }
+      },
+      "required": [
+        "autoImport",
+        "retainZip",
+        "resumeOnStart",
+        "recursive",
+        "enabledFormats",
+        "favorites",
+        "lastDirectory",
+        "defaultOptions",
+        "pollSeconds",
+        "requestSeconds",
+        "transferSeconds",
+        "generationMinutes",
+        "safeRetries"
+      ],
+      "additionalProperties": false
+    },
+    "AudioItem": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "default": ""
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "artist": {
+          "type": "string",
+          "default": ""
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0
+        },
+        "coverPath": {
+          "type": "string",
+          "default": ""
+        },
+        "coverBase64": {
+          "type": "string",
+          "default": ""
+        },
+        "coverMime": {
+          "type": "string",
+          "default": ""
+        },
+        "error": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "path",
+        "title",
+        "artist",
+        "duration",
+        "coverPath",
+        "coverBase64",
+        "coverMime",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "BrowserEntry": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "default": ""
+        },
+        "name": {
+          "type": "string",
+          "default": ""
+        },
+        "directory": {
+          "type": "boolean"
+        },
+        "error": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "path",
+        "name",
+        "directory",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "GenerationJob": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "default": ""
+        },
+        "path": {
+          "type": "string",
+          "default": ""
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "artist": {
+          "type": "string",
+          "default": ""
+        },
+        "coverPath": {
+          "type": "string",
+          "default": ""
+        },
+        "fileSha256": {
+          "type": "string",
+          "default": ""
+        },
+        "signature": {
+          "type": "string",
+          "default": ""
+        },
+        "remoteId": {
+          "type": "string",
+          "default": ""
+        },
+        "remoteStage": {
+          "type": "string",
+          "default": ""
+        },
+        "createdUtc": {
+          "type": "string",
+          "default": ""
+        },
+        "updatedUtc": {
+          "type": "string",
+          "default": ""
+        },
+        "errorCategory": {
+          "type": "string",
+          "default": ""
+        },
+        "errorMessage": {
+          "type": "string",
+          "default": ""
+        },
+        "detail": {
+          "type": "string",
+          "default": ""
+        },
+        "zipPath": {
+          "type": "string",
+          "default": ""
+        },
+        "folder": {
+          "type": "string",
+          "default": ""
+        },
+        "levelId": {
+          "type": "string",
+          "default": ""
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0
+        },
+        "fileSize": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "state": {
+          "$ref": "#/definitions/JobState"
+        },
+        "progress": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "options": {
+          "$ref": "#/definitions/GenerationOptions"
+        },
+        "cancelRequested": {
+          "type": "boolean"
+        },
+        "force": {
+          "type": "boolean"
+        },
+        "expectedKeys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "id",
+        "path",
+        "title",
+        "artist",
+        "coverPath",
+        "fileSha256",
+        "signature",
+        "remoteId",
+        "remoteStage",
+        "createdUtc",
+        "updatedUtc",
+        "errorCategory",
+        "errorMessage",
+        "detail",
+        "zipPath",
+        "folder",
+        "levelId",
+        "duration",
+        "fileSize",
+        "revision",
+        "state",
+        "progress",
+        "options",
+        "cancelRequested",
+        "force",
+        "expectedKeys",
+        "attempt"
+      ],
+      "additionalProperties": false
+    },
+    "Preset": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "default": "",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "options": {
+          "$ref": "#/definitions/GenerationOptions"
+        }
+      },
+      "required": [
+        "name",
+        "options"
+      ],
+      "additionalProperties": false
+    },
+    "AppState": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "integer",
+          "enum": [
+            1
+          ]
+        },
+        "installRoot": {
+          "type": "string",
+          "default": ""
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "settings": {
+          "$ref": "#/definitions/Settings"
+        },
+        "presets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Preset"
+          }
+        },
+        "jobs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GenerationJob"
+          }
+        },
+        "notice": {
+          "type": "string",
+          "default": ""
+        },
+        "importBlocked": {
+          "type": "boolean"
+        },
+        "retryAfterUtc": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "installRoot",
+        "paused",
+        "settings",
+        "presets",
+        "jobs",
+        "notice",
+        "importBlocked",
+        "retryAfterUtc"
+      ],
+      "additionalProperties": false
+    },
+    "CreateRequest": {
+      "type": "object",
+      "properties": {
+        "audioFile": {
+          "type": "string",
+          "default": "",
+          "minLength": 1
+        },
+        "audio_metadata_title": {
+          "type": "string",
+          "default": ""
+        },
+        "audio_metadata_artist": {
+          "type": "string",
+          "default": ""
+        },
+        "difficulties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Difficulty"
+          },
+          "minItems": 1
+        },
+        "modes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Mode"
+          },
+          "minItems": 1
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SongEvent"
+          }
+        },
+        "environment": {
+          "type": "string",
+          "default": "",
+          "minLength": 1
+        },
+        "system_tag": {
+          "$ref": "#/definitions/Model"
+        },
+        "coverFile": {
+          "type": "string",
+          "default": ""
+        },
+        "audioFileSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "audioFile",
+        "audio_metadata_title",
+        "audio_metadata_artist",
+        "difficulties",
+        "modes",
+        "events",
+        "environment",
+        "system_tag",
+        "coverFile",
+        "audioFileSha256"
+      ],
+      "additionalProperties": false
+    },
+    "CreateResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "default": "",
+          "minLength": 1,
+          "maxLength": 160
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": true
+    },
+    "HeartbeatResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "PENDING",
+            "LOADING_AUDIO",
+            "CREATING_LEVEL",
+            "FORMATTING_LEVEL",
+            "DONE",
+            "FAILED",
+            "ERROR",
+            "CANCELLED",
+            "EXPIRED"
+          ]
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "x-defaultState": {
+    "schemaVersion": 1,
+    "installRoot": "",
+    "paused": false,
+    "settings": {
+      "autoImport": true,
+      "autoPlaylist": true,
+      "retainZip": true,
+      "resumeOnStart": true,
+      "recursive": true,
+      "enabledFormats": [
+        ".mp3",
+        ".flac",
+        ".wav",
+        ".ogg",
+        ".aac",
+        ".aiff",
+        ".aif"
+      ],
+      "favorites": [],
+      "lastDirectory": "",
+      "defaultOptions": {
+        "difficulties": [
+          "Normal",
+          "Hard",
+          "Expert",
+          "ExpertPlus"
+        ],
+        "modes": [
+          "Standard"
+        ],
+        "model": "v2",
+        "events": [
+          "DotBlocks",
+          "Obstacles"
+        ],
+        "environment": "DefaultEnvironment"
+      },
+      "pollSeconds": 5,
+      "requestSeconds": 30,
+      "transferSeconds": 300,
+      "generationMinutes": 20,
+      "safeRetries": 3
+    },
+    "presets": [
+      {
+        "name": "Default",
+        "options": {
+          "difficulties": [
+            "Normal",
+            "Hard",
+            "Expert",
+            "ExpertPlus"
+          ],
+          "modes": [
+            "Standard"
+          ],
+          "model": "v2",
+          "events": [
+            "DotBlocks",
+            "Obstacles"
+          ],
+          "environment": "DefaultEnvironment"
+        }
+      }
+    ],
+    "jobs": [],
+    "notice": "",
+    "importBlocked": false,
+    "retryAfterUtc": ""
+  },
+  "x-environments": [
+    {
+      "value": "DefaultEnvironment",
+      "gameName": "DefaultEnvironment"
+    },
+    {
+      "value": "Origins",
+      "gameName": "OriginsEnvironment"
+    },
+    {
+      "value": "TriangleEnvironment",
+      "gameName": "TriangleEnvironment"
+    },
+    {
+      "value": "NiceEnvironment",
+      "gameName": "NiceEnvironment"
+    },
+    {
+      "value": "BigMirrorEnvironment",
+      "gameName": "BigMirrorEnvironment"
+    },
+    {
+      "value": "DragonsEnvironment",
+      "gameName": "DragonsEnvironment"
+    },
+    {
+      "value": "KDAEnvironment",
+      "gameName": "KDAEnvironment"
+    },
+    {
+      "value": "MonstercatEnvironment",
+      "gameName": "MonstercatEnvironment"
+    },
+    {
+      "value": "CrabRaveEnvironment",
+      "gameName": "CrabRaveEnvironment"
+    },
+    {
+      "value": "PanicEnvironment",
+      "gameName": "PanicEnvironment"
+    },
+    {
+      "value": "RocketEnvironment",
+      "gameName": "RocketEnvironment"
+    },
+    {
+      "value": "GreenDayEnvironment",
+      "gameName": "GreenDayEnvironment"
+    },
+    {
+      "value": "GreenDayGrenadeEnvironment",
+      "gameName": "GreenDayGrenadeEnvironment"
+    },
+    {
+      "value": "TimbalandEnvironment",
+      "gameName": "TimbalandEnvironment"
+    },
+    {
+      "value": "FitBeatEnvironment",
+      "gameName": "FitBeatEnvironment"
+    },
+    {
+      "value": "LinkinParkEnvironment",
+      "gameName": "LinkinParkEnvironment"
+    }
+  ]
+}

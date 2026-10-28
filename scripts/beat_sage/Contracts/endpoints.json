@@ -1,0 +1,37 @@
+{
+  "baseUrl": "https://beatsage.com/",
+  "endpoints": [
+    {
+      "name": "create",
+      "method": "POST",
+      "path": "beatsaber_custom_level_create",
+      "request": "CreateRequest",
+      "response": "CreateResponse",
+      "encoding": "multipart",
+      "fields": {
+        "audioFile": "audio_file",
+        "audio_metadata_title": "audio_metadata_title",
+        "audio_metadata_artist": "audio_metadata_artist",
+        "difficulties": "difficulties",
+        "modes": "modes",
+        "events": "events",
+        "environment": "environment",
+        "system_tag": "system_tag",
+        "coverFile": "cover_art",
+        "audioFileSha256": null
+      }
+    },
+    {
+      "name": "heartbeat",
+      "method": "GET",
+      "path": "beatsaber_custom_level_heartbeat/{id}",
+      "response": "HeartbeatResponse"
+    },
+    {
+      "name": "download",
+      "method": "GET",
+      "path": "beatsaber_custom_level_download/{id}",
+      "response": "zip"
+    }
+  ]
+}

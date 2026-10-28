@@ -1,0 +1,225 @@
+<bg>
+  <vertical spacing='2' preferred-width='154' min-width='0' preferred-height='74' horizontal-fit='Unconstrained' vertical-fit='Unconstrained' child-control-width='true' child-expand-width='false'>
+    <horizontal preferred-height='7' spacing='2' child-control-width='true' child-expand-width='false' child-align='MiddleCenter'>
+      <primary-button text='~caption-local-music' active='~is-local-tab' on-click='tab-local' font-size='3' pref-width='47' pref-height='7'/>
+      <button text='~caption-local-music' active='~is-local-tab-inactive' on-click='tab-local' font-size='3' pref-width='47' pref-height='7'/>
+      <primary-button text='~caption-generation-queue' active='~is-queue-tab' on-click='tab-queue' font-size='3' pref-width='47' pref-height='7'/>
+      <button text='~caption-generation-queue' active='~is-queue-tab-inactive' on-click='tab-queue' font-size='3' pref-width='47' pref-height='7'/>
+      <primary-button text='~caption-settings' active='~is-settings-tab' on-click='tab-settings' font-size='3' pref-width='47' pref-height='7'/>
+      <button text='~caption-settings' active='~is-settings-tab-inactive' on-click='tab-settings' font-size='3' pref-width='47' pref-height='7'/>
+    </horizontal>
+    <text id='error-text' active='~has-feedback' text='~feedback' hover-hint='…' rich-text='false' font-size='3.2' color='#CDE5F7' preferred-height='7' overflow-mode='Ellipsis' word-wrapping='true'/>
+
+    <horizontal id='local-panel' active='~is-local-tab' preferred-width='154' preferred-height='61' spacing='2' child-control-width='true' child-expand-width='false'>
+      <vertical preferred-width='56' min-width='0' preferred-height='61' pad='2' spacing='1' background='round-rect-panel' bg-color='#111E30ED' horizontal-fit='Unconstrained' child-control-width='true' child-expand-width='false'>
+        <text id='browser-title-text' text='~browser-title' hover-hint='…' font-size='3' bold='true' rich-text='false' preferred-height='4' overflow-mode='Ellipsis' word-wrapping='false'/>
+        <horizontal preferred-height='5' spacing='1' child-control-width='true' child-expand-width='false'>
+          <button text='~caption-root' on-click='browse-root' font-size='2.4' pref-width='15' pref-height='5'/>
+          <button text='~caption-parent' on-click='browse-parent' font-size='2.4' pref-width='15' pref-height='5'/>
+          <button text='~caption-last-folder' on-click='browse-last' active='~not-cover-mode' font-size='2.4' pref-width='20' pref-height='5'/>
+          <button text='~caption-back' on-click='cancel-cover' active='~cover-mode' font-size='2.4' pref-width='20' pref-height='5'/>
+        </horizontal>
+        <text id='current-path-text' text='~current-path' hover-hint='…' font-size='2.2' rich-text='false' color='#9DB6CF' preferred-height='3' overflow-mode='Ellipsis' word-wrapping='false'/>
+        <string-setting text='~caption-search' value='browser-filter' apply-on-change='true' bind-value='true' preferred-width='52' min-width='0' preferred-height='5'/>
+        <list id='browser-list' preferred-width='52' min-width='0' list-width='52' pref-height='28' cell-size='7' visible-cells='4' select-cell='browser-select' show-scrollbar='true' stick-scrolling='true'/>
+        <horizontal preferred-height='5' spacing='1' child-control-width='true' child-expand-width='false'>
+          <button text='~caption-scan-current' on-click='scan-current' font-size='2.4' pref-width='25' pref-height='5'/>
+          <button text='~caption-scan-selected' on-click='scan-selected' font-size='2.4' pref-width='26' pref-height='5'/>
+        </horizontal>
+      </vertical>
+      <vertical preferred-width='94' min-width='0' preferred-height='61' pad='2' spacing='0.4' background='round-rect-panel' bg-color='#172B42ED' horizontal-fit='Unconstrained' child-control-width='true' child-expand-width='false'>
+        <horizontal preferred-height='4' spacing='2' child-control-width='true' child-expand-width='false'>
+          <text text='~caption-scan-preview' font-size='3' bold='true' preferred-width='34'/>
+          <text text='~selected-count' font-size='2.4' color='#69D8FF' preferred-width='52' overflow-mode='Ellipsis' word-wrapping='false'/>
+        </horizontal>
+        <horizontal preferred-height='4' spacing='1' child-control-width='true' child-expand-width='false'>
+          <button text='~caption-select-all' on-click='select-all-scan' font-size='2.4' pref-width='20' pref-height='4'/>
+          <button text='~caption-clear' on-click='clear-scan' font-size='2.4' pref-width='18' pref-height='4'/>
+          <button text='~caption-previous-page' on-click='scan-page-prev' active='~can-scan-prev' font-size='2.2' pref-width='16' pref-height='4'/>
+          <text text='~scan-page' font-size='2.2' preferred-width='12' align='Center'/>
+          <button text='~caption-next-page' on-click='scan-page-next' active='~can-scan-next' font-size='2.2' pref-width='16' pref-height='4'/>
+        </horizontal>
+        <list id='scan-list' preferred-width='90' min-width='0' list-width='90' pref-height='18' cell-size='6' visible-cells='3' select-cell='scan-select' show-scrollbar='true' stick-scrolling='true'/>
+        <horizontal preferred-width='90' preferred-height='17' min-width='0' pad='1' spacing='2' background='round-rect-panel' bg-color='#0B1729E8' child-control-width='true' child-expand-width='false'>
+          <image id='selected-cover-image' preferred-width='15' min-width='15' preferred-height='15' preserve-aspect='true'/>
+          <vertical preferred-width='69' min-width='0' spacing='0.5' child-control-width='true' child-expand-width='false'>
+            <text id='selected-song-title-text' text='~selected-song-title' hover-hint='…' font-size='3.2' bold='true' rich-text='false' preferred-height='4' overflow-mode='Ellipsis' word-wrapping='false'/>
+            <text id='selected-song-artist-text' text='~selected-song-artist' hover-hint='…' font-size='2.4' rich-text='false' color='#BBCDE0' preferred-height='3' overflow-mode='Ellipsis' word-wrapping='false'/>
+            <text text='~selected-song-duration' font-size='2.3' color='#8DA9C4' preferred-height='3'/>
+          </vertical>
+        </horizontal>
+        <button text='~option-summary' on-click='open-generation' font-size='2.3' pref-width='90' pref-height='4'/>
+        <horizontal preferred-height='8' spacing='2' child-control-width='true' child-expand-width='false'>
+          <button text='~edit-label' active='~has-song' on-click='open-song-editor' font-size='2.6' pref-width='26' pref-height='6'/>
+          <primary-button id='submit-button' text='~submit-label' interactable='~can-submit' on-click='enqueue-selected' font-size='3' pref-width='62' pref-height='8'/>
+        </horizontal>
+      </vertical>
+    </horizontal>
+
+    <horizontal id='queue-panel' active='~is-queue-tab' preferred-width='154' preferred-height='61' spacing='2' child-control-width='true' child-expand-width='false'>
+      <vertical preferred-width='88' min-width='0' preferred-height='61' background='round-rect-panel' bg-color='#111E30ED' pad='2' spacing='1' child-control-width='true' child-expand-width='false'>
+        <text text='~queue-summary' font-size='2.8' color='#BBCDE0' preferred-height='4'/>
+        <horizontal preferred-height='5' spacing='2' child-control-width='true' child-expand-width='false'>
+          <button text='~pause-label' on-click='toggle-pause' font-size='2.6' pref-width='44' pref-height='5'/>
+          <button text='~caption-import-ready' active='~can-import-ready' on-click='import-ready' font-size='2.6' pref-width='36' pref-height='5'/>
+        </horizontal>
+        <list id='queue-list' preferred-width='84' min-width='0' list-width='84' pref-height='44' cell-size='8.5' visible-cells='5' select-cell='queue-select' show-scrollbar='true' stick-scrolling='true'/>
+      </vertical>
+      <vertical preferred-width='64' min-width='0' preferred-height='61' background='round-rect-panel' bg-color='#172B42ED' pad='3' spacing='1' child-control-width='true' child-expand-width='false'>
+        <text id='job-title-text' text='~job-title' hover-hint='…' rich-text='false' font-size='3.5' bold='true' preferred-height='5' overflow-mode='Ellipsis' word-wrapping='false'/>
+        <text id='job-artist-text' text='~job-artist' hover-hint='…' active='~has-selected-job' rich-text='false' font-size='2.5' color='#BBCDE0' preferred-height='4' overflow-mode='Ellipsis' word-wrapping='false'/>
+        <text text='~job-stage' active='~has-selected-job' font-size='3' color='#69D8FF' preferred-height='5'/>
+        <text text='~job-options' active='~has-selected-job' font-size='2.5' color='#BBCDE0' preferred-height='10' word-wrapping='true'/>
+        <text id='job-error-text' text='~job-error' hover-hint='…' active='~has-job-error' rich-text='false' color='#FFAAA7' font-size='3.2' preferred-height='10' word-wrapping='true' overflow-mode='Ellipsis'/>
+        <primary-button text='~caption-open-song' active='~can-show-song' on-click='show-song' font-size='3' pref-width='58' pref-height='8'/>
+        <button text='~caption-regenerate' active='~can-regenerate-job' on-click='regenerate-job' font-size='2.6' pref-width='58' pref-height='5'/>
+        <horizontal preferred-height='5' spacing='2' child-control-width='true' child-expand-width='false'>
+          <button text='~caption-cancel' active='~can-cancel-job' on-click='cancel-job' font-size='2.6' pref-width='28' pref-height='5'/>
+          <button text='~caption-retry' active='~can-retry-job' on-click='retry-job' font-size='2.6' pref-width='28' pref-height='5'/>
+        </horizontal>
+      </vertical>
+    </horizontal>
+
+    <vertical id='settings-panel' active='~is-settings-tab' preferred-width='154' preferred-height='61' spacing='1.5' child-control-width='true' child-expand-width='false'>
+      <horizontal preferred-height='6' spacing='2' child-align='MiddleCenter' child-control-width='true' child-expand-width='false'>
+        <primary-button text='~caption-generation' active='~is-generation-settings' on-click='settings-generation' font-size='2.7' pref-width='46' pref-height='6'/>
+        <button text='~caption-generation' active='~not-generation-settings' on-click='settings-generation' font-size='2.7' pref-width='46' pref-height='6'/>
+        <primary-button text='~caption-application' active='~is-application-settings' on-click='settings-application' font-size='2.7' pref-width='46' pref-height='6'/>
+        <button text='~caption-application' active='~not-application-settings' on-click='settings-application' font-size='2.7' pref-width='46' pref-height='6'/>
+        <primary-button text='~caption-presets' active='~is-preset-settings' on-click='settings-presets' font-size='2.7' pref-width='46' pref-height='6'/>
+        <button text='~caption-presets' active='~not-preset-settings' on-click='settings-presets' font-size='2.7' pref-width='46' pref-height='6'/>
+      </horizontal>
+      <vertical id='generation-panel' active='~is-generation-settings' preferred-width='154' preferred-height='44' background='round-rect-panel' bg-color='#111E30ED' pad='3' spacing='2' child-control-width='true' child-expand-width='false'>
+        <horizontal preferred-height='6' spacing='2' child-control-width='true' child-expand-width='false'>
+          <button text='~selected-model-label' on-click='open-model-choices' font-size='2.8' pref-width='56' pref-height='6'/>
+          <button text='~selected-environment-label' on-click='open-environment-choices' font-size='2.8' pref-width='90' pref-height='6'/>
+        </horizontal>
+        <horizontal preferred-height='7' spacing='2' child-control-width='true' child-expand-width='false'>
+          <text text='~caption-difficulties' font-size='2.7' color='#9DB6CF' preferred-width='22'/>
+          <primary-button text='~difficulty-normal-label' on-click='toggle-difficulty-normal' font-size='2.7' pref-width='29' pref-height='7' active='~difficulty-normal'/>
+          <button text='~difficulty-normal-label' on-click='toggle-difficulty-normal' font-size='2.7' pref-width='29' pref-height='7' active='~difficulty-normal-off'/>
+          <primary-button text='~difficulty-hard-label' on-click='toggle-difficulty-hard' font-size='2.7' pref-width='29' pref-height='7' active='~difficulty-hard'/>
+          <button text='~difficulty-hard-label' on-click='toggle-difficulty-hard' font-size='2.7' pref-width='29' pref-height='7' active='~difficulty-hard-off'/>
+          <primary-button text='~difficulty-expert-label' on-click='toggle-difficulty-expert' font-size='2.7' pref-width='29' pref-height='7' active='~difficulty-expert'/>
+          <button text='~difficulty-expert-label' on-click='toggle-difficulty-expert' font-size='2.7' pref-width='29' pref-height='7' active='~difficulty-expert-off'/>
+          <primary-button text='~difficulty-expert-plus-label' on-click='toggle-difficulty-expert-plus' font-size='2.7' pref-width='29' pref-height='7' active='~difficulty-expert-plus'/>
+          <button text='~difficulty-expert-plus-label' on-click='toggle-difficulty-expert-plus' font-size='2.7' pref-width='29' pref-height='7' active='~difficulty-expert-plus-off'/>
+        </horizontal>
+        <horizontal preferred-height='7' spacing='2' child-control-width='true' child-expand-width='false'>
+          <text text='~caption-modes' font-size='2.7' color='#9DB6CF' preferred-width='22'/>
+          <primary-button text='~mode-standard-label' on-click='toggle-mode-standard' font-size='2.7' pref-width='29' pref-height='7' active='~mode-standard'/>
+          <button text='~mode-standard-label' on-click='toggle-mode-standard' font-size='2.7' pref-width='29' pref-height='7' active='~mode-standard-off'/>
+          <primary-button text='~mode-no-arrows-label' on-click='toggle-mode-no-arrows' font-size='2.7' pref-width='29' pref-height='7' active='~mode-no-arrows'/>
+          <button text='~mode-no-arrows-label' on-click='toggle-mode-no-arrows' font-size='2.7' pref-width='29' pref-height='7' active='~mode-no-arrows-off'/>
+          <primary-button text='~mode-one-saber-label' on-click='toggle-mode-one-saber' font-size='2.7' pref-width='29' pref-height='7' active='~mode-one-saber'/>
+          <button text='~mode-one-saber-label' on-click='toggle-mode-one-saber' font-size='2.7' pref-width='29' pref-height='7' active='~mode-one-saber-off'/>
+          <horizontal active='~mode-ninety-active' preferred-width='29' preferred-height='7' child-control-width='true' child-expand-width='false'><primary-button text='~mode-ninety-label' on-click='toggle-mode-ninety' font-size='2.7' pref-width='29' pref-height='7' active='~mode-ninety'/>
+          <button text='~mode-ninety-label' on-click='toggle-mode-ninety' font-size='2.7' pref-width='29' pref-height='7' active='~mode-ninety-off'/></horizontal>
+        </horizontal>
+        <horizontal preferred-height='7' spacing='2' child-control-width='true' child-expand-width='false'>
+          <text text='~caption-events' font-size='2.7' color='#9DB6CF' preferred-width='22'/>
+          <primary-button text='~event-bombs-label' on-click='toggle-event-bombs' font-size='2.7' pref-width='29' pref-height='7' active='~event-bombs'/>
+          <button text='~event-bombs-label' on-click='toggle-event-bombs' font-size='2.7' pref-width='29' pref-height='7' active='~event-bombs-off'/>
+          <primary-button text='~event-dot-blocks-label' on-click='toggle-event-dot-blocks' font-size='2.7' pref-width='29' pref-height='7' active='~event-dot-blocks'/>
+          <button text='~event-dot-blocks-label' on-click='toggle-event-dot-blocks' font-size='2.7' pref-width='29' pref-height='7' active='~event-dot-blocks-off'/>
+          <horizontal active='~event-obstacles-active' preferred-width='29' preferred-height='7' child-control-width='true' child-expand-width='false'><primary-button text='~event-obstacles-label' on-click='toggle-event-obstacles' font-size='2.7' pref-width='29' pref-height='7' active='~event-obstacles'/>
+          <button text='~event-obstacles-label' on-click='toggle-event-obstacles' font-size='2.7' pref-width='29' pref-height='7' active='~event-obstacles-off'/></horizontal>
+        </horizontal>
+      </vertical>
+      <vertical id='application-panel' active='~is-application-settings' preferred-width='154' preferred-height='44' background='round-rect-panel' bg-color='#111E30ED' pad='3' spacing='2' child-control-width='true' child-expand-width='false'>
+        <horizontal preferred-height='6' spacing='2' child-control-width='true' child-expand-width='false'>
+          <primary-button text='~setting-auto-import-label' on-click='toggle-setting-auto-import' font-size='2.7' pref-width='73' pref-height='6' active='~setting-auto-import'/>
+          <button text='~setting-auto-import-label' on-click='toggle-setting-auto-import' font-size='2.7' pref-width='73' pref-height='6' active='~setting-auto-import-off'/>
+          <primary-button text='~setting-retain-zip-label' on-click='toggle-setting-retain-zip' font-size='2.7' pref-width='73' pref-height='6' active='~setting-retain-zip'/>
+          <button text='~setting-retain-zip-label' on-click='toggle-setting-retain-zip' font-size='2.7' pref-width='73' pref-height='6' active='~setting-retain-zip-off'/>
+        </horizontal>
+        <horizontal preferred-height='6' spacing='2' child-control-width='true' child-expand-width='false'>
+          <primary-button text='~setting-resume-label' on-click='toggle-setting-resume' font-size='2.7' pref-width='73' pref-height='6' active='~setting-resume'/>
+          <button text='~setting-resume-label' on-click='toggle-setting-resume' font-size='2.7' pref-width='73' pref-height='6' active='~setting-resume-off'/>
+          <primary-button text='~setting-recursive-label' on-click='toggle-setting-recursive' font-size='2.7' pref-width='73' pref-height='6' active='~setting-recursive'/>
+          <button text='~setting-recursive-label' on-click='toggle-setting-recursive' font-size='2.7' pref-width='73' pref-height='6' active='~setting-recursive-off'/>
+        </horizontal>
+        <horizontal preferred-height='6' spacing='2' child-control-width='true' child-expand-width='false'>
+          <primary-button text='~setting-auto-playlist-label' on-click='toggle-setting-auto-playlist' font-size='2.7' pref-width='148' pref-height='6' active='~setting-auto-playlist'/>
+          <button text='~setting-auto-playlist-label' on-click='toggle-setting-auto-playlist' font-size='2.7' pref-width='148' pref-height='6' active='~setting-auto-playlist-off'/>
+        </horizontal>
+        <horizontal preferred-height='5' spacing='1' child-control-width='true' child-expand-width='false'>
+          <text text='~caption-audio-formats' font-size='2.5' color='#9DB6CF' preferred-width='22'/>
+          <primary-button text='~setting-format-mp3-label' on-click='toggle-setting-format-mp3' font-size='2.3' pref-width='20' pref-height='5' active='~setting-format-mp3'/>
+          <button text='~setting-format-mp3-label' on-click='toggle-setting-format-mp3' font-size='2.3' pref-width='20' pref-height='5' active='~setting-format-mp3-off'/>
+          <primary-button text='~setting-format-flac-label' on-click='toggle-setting-format-flac' font-size='2.3' pref-width='20' pref-height='5' active='~setting-format-flac'/>
+          <button text='~setting-format-flac-label' on-click='toggle-setting-format-flac' font-size='2.3' pref-width='20' pref-height='5' active='~setting-format-flac-off'/>
+          <primary-button text='~setting-format-wav-label' on-click='toggle-setting-format-wav' font-size='2.3' pref-width='20' pref-height='5' active='~setting-format-wav'/>
+          <button text='~setting-format-wav-label' on-click='toggle-setting-format-wav' font-size='2.3' pref-width='20' pref-height='5' active='~setting-format-wav-off'/>
+          <primary-button text='~setting-format-ogg-label' on-click='toggle-setting-format-ogg' font-size='2.3' pref-width='20' pref-height='5' active='~setting-format-ogg'/>
+          <button text='~setting-format-ogg-label' on-click='toggle-setting-format-ogg' font-size='2.3' pref-width='20' pref-height='5' active='~setting-format-ogg-off'/>
+          <primary-button text='~setting-format-aac-label' on-click='toggle-setting-format-aac' font-size='2.3' pref-width='20' pref-height='5' active='~setting-format-aac'/>
+          <button text='~setting-format-aac-label' on-click='toggle-setting-format-aac' font-size='2.3' pref-width='20' pref-height='5' active='~setting-format-aac-off'/>
+          <primary-button text='~setting-format-aiff-label' on-click='toggle-setting-format-aiff' font-size='2.3' pref-width='20' pref-height='5' active='~setting-format-aiff'/>
+          <button text='~setting-format-aiff-label' on-click='toggle-setting-format-aiff' font-size='2.3' pref-width='20' pref-height='5' active='~setting-format-aiff-off'/>
+        </horizontal>
+        <horizontal preferred-height='5' spacing='2' child-control-width='true' child-expand-width='false'>
+          <button text='~caption-add-current-folder' on-click='add-favorite' font-size='2.5' pref-width='48' pref-height='5'/>
+          <button text='~caption-remove-current-favorite' on-click='remove-favorite' font-size='2.5' pref-width='48' pref-height='5'/>
+          <text id='favorites-summary-text' text='~favorites-summary' hover-hint='…' font-size='2.2' color='#9DB6CF' preferred-width='48' preferred-height='5' overflow-mode='Ellipsis' word-wrapping='false' rich-text='false'/>
+        </horizontal>
+      </vertical>
+      <vertical id='presets-panel' active='~is-preset-settings' preferred-width='154' preferred-height='44' background='round-rect-panel' bg-color='#111E30ED' pad='3' spacing='2' child-control-width='true' child-expand-width='false'>
+        <button text='~option-summary' on-click='settings-generation' font-size='2.8' pref-width='148' pref-height='7'/>
+        <string-setting text='~caption-name' value='preset-name' bind-value='true' apply-on-change='true' preferred-width='148' min-width='0' preferred-height='7'/>
+        <horizontal preferred-height='8' spacing='2' child-control-width='true' child-expand-width='false'>
+          <primary-button text='~caption-save-current' on-click='save-preset' font-size='2.8' pref-width='48' pref-height='8'/>
+          <button id='selected-preset-button' text='~selected-preset-label' hover-hint='…' on-click='open-preset-choices' interactable='~has-presets' font-size='2.8' pref-width='98' pref-height='7'/>
+        </horizontal>
+        <horizontal preferred-height='6' spacing='2' child-control-width='true' child-expand-width='false'>
+          <button text='~caption-load' on-click='load-preset' interactable='~has-selected-preset' font-size='2.7' pref-width='48' pref-height='6'/>
+          <button text='~caption-delete' on-click='delete-preset' interactable='~has-selected-preset' font-size='2.7' pref-width='48' pref-height='6'/>
+        </horizontal>
+      </vertical>
+      <horizontal preferred-height='8' spacing='2' child-align='MiddleRight' child-control-width='true' child-expand-width='false'>
+        <primary-button text='~caption-save-settings' on-click='save-settings' font-size='2.8' pref-width='46' pref-height='8'/>
+      </horizontal>
+    </vertical>
+
+    <modal id='unsaved-modal' size-delta-x='134' size-delta-y='39' clickerino-offerino-closerino='false'>
+      <vertical pad='3' spacing='2' background='round-rect-panel' bg-color='#101E31FA' child-control-width='true' child-expand-width='false'>
+        <text text='~unsaved-title' align='Center' font-size='3.6' preferred-height='7'/>
+        <text text='~error' active='~has-error' align='Center' font-size='3.2' preferred-height='6' word-wrapping='true'/>
+        <horizontal preferred-height='8' spacing='2' child-align='MiddleCenter' child-control-width='true' child-expand-width='false'>
+          <button text='~continue-editing-label' on-click='continue-editing' font-size='3.2' pref-width='48' pref-height='8'/>
+          <button text='~discard-and-leave-label' on-click='discard-and-leave' font-size='3.2' pref-width='34' pref-height='8'/>
+          <primary-button text='~save-and-leave-label' on-click='save-and-leave' font-size='3.2' pref-width='38' pref-height='8'/>
+        </horizontal>
+      </vertical>
+    </modal>
+    <modal id='choice-modal' size-delta-x='92' size-delta-y='58' clickerino-offerino-closerino='false'>
+      <vertical pad='3' spacing='2' background='round-rect-panel' bg-color='#101E31FA' child-control-width='true' child-expand-width='false'>
+        <text text='~choice-title' rich-text='false' align='Center' font-size='3.2' bold='true' preferred-height='5' overflow-mode='Ellipsis' word-wrapping='false'/>
+        <list id='choice-list' preferred-width='76' min-width='0' list-width='76' pref-height='36' cell-size='6' visible-cells='6' select-cell='choice-select' show-scrollbar='true' stick-scrolling='true'/>
+        <button text='~caption-back' on-click='close-choices' font-size='2.8' pref-width='86' pref-height='6'/>
+      </vertical>
+    </modal>
+    <modal id='song-editor-modal' show-event='show-song-editor' hide-event='close-song-editor' clickerino-offerino-closerino='false' size-delta-x='112' size-delta-y='48'>
+      <vertical spacing='2' pad='3' background='round-rect-panel'>
+        <text text='~caption-song-metadata' align='Center' font-size='3.5' bold='true'/>
+        <string-setting text='~caption-title' value='song-title' apply-on-change='true' bind-value='true' min-width='0' preferred-height='7'/>
+        <string-setting text='~caption-artist' value='song-artist' apply-on-change='true' bind-value='true' min-width='0' preferred-height='7'/>
+        <horizontal spacing='1' child-expand-width='false' child-control-width='true'>
+          <string-setting text='~caption-cover-path' value='song-cover-path' apply-on-change='true' bind-value='true' min-width='0' preferred-width='78' preferred-height='7'/>
+          <button text='~caption-choose-cover' on-click='choose-cover' font-size='2.6' pref-width='26' pref-height='6'/>
+        </horizontal>
+        <button text='~caption-back' on-click='close-song-editor' font-size='2.8' pref-width='106' pref-height='6'/>
+      </vertical>
+    </modal>
+    <modal id='retry-modal' show-event='show-retry' hide-event='close-retry' clickerino-offerino-closerino='false' size-delta-x='76' size-delta-y='32'>
+      <vertical spacing='2' pad='3'>
+        <text text='~retry-title' align='Center' font-size='3.2'/>
+        <text text='~caption-the-upload-result-is-unknown-resubmit' font-size='2.7' align='Center' word-wrapping='true'/>
+        <horizontal spacing='2' child-align='MiddleCenter'>
+          <button text='~caption-cancel' on-click='close-retry' font-size='2.7' pref-width='31' pref-height='7'/>
+          <primary-button text='~caption-confirm-retry' on-click='confirm-retry' font-size='2.7' pref-width='31' pref-height='8'/>
+        </horizontal>
+      </vertical>
+    </modal>
+  </vertical>
+</bg>
