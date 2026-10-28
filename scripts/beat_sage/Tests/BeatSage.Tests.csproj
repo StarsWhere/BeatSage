@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>BeatSage.Tests</AssemblyName>
+    <RootNamespace>BeatSage.Tests</RootNamespace>
+    <OutputPath Condition="'$(OutputPath)' == ''">$(RepoRoot)/.tmp/beatsage-mod/tests/bin/</OutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)' == ''">$(RepoRoot)/.tmp/beatsage-mod/tests/obj/</BaseIntermediateOutputPath>
+    <IntermediateOutputPath Condition="'$(IntermediateOutputPath)' == ''">$(BaseIntermediateOutputPath)$(Configuration)/</IntermediateOutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="TagLibSharp" Version="2.3.0" />
+    <Compile Include="../LocalMusic.cs" Link="LocalMusic.cs" />
+    <Compile Include="../BeatSagePlaylist.cs" Link="BeatSagePlaylist.cs" />
+    <Compile Remove="CoreTests.cs" />
+    <Reference Include="BeatSaberPlaylistsLib"><HintPath>$(GameRoot)/Libs/BeatSaberPlaylistsLib.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="DataModels"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/DataModels.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/UnityEngine.CoreModule.dll</HintPath><Private>true</Private></Reference>
+  </ItemGroup>
+</Project>

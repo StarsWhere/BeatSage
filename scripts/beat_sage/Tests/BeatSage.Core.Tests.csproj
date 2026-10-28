@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>12</LangVersion>
+    <PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>BeatSage.Core.Tests</AssemblyName>
+    <RootNamespace>BeatSage.Core.Tests</RootNamespace>
+    <EnableFrameworkPathOverride>true</EnableFrameworkPathOverride>
+    <FrameworkPathOverride>$(GameRoot)/Beat Saber_Data/Managed</FrameworkPathOverride>
+    <OutputPath Condition="'$(OutputPath)' == ''">$(RepoRoot)/.tmp/beatsage-mod/tests/core-bin/</OutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)' == ''">$(RepoRoot)/.tmp/beatsage-mod/tests/core-obj/</BaseIntermediateOutputPath>
+    <IntermediateOutputPath Condition="'$(IntermediateOutputPath)' == ''">$(BaseIntermediateOutputPath)$(Configuration)/</IntermediateOutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Deterministic>true</Deterministic>
+    <DebugType>portable</DebugType>
+    <NoWarn>$(NoWarn);CS0649;CS0414;CS0618;NU1701</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net472" Version="1.0.3" PrivateAssets="all" />
+    <PackageReference Include="NJsonSchema" Version="11.6.1" />
+    <PackageReference Include="TagLibSharp" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json"><HintPath>$(GameRoot)/Libs/Newtonsoft.Json.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="System.Net.Http"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/System.Net.Http.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="System.IO.Compression"><HintPath>$(GameRoot)/Libs/System.IO.Compression.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="System.IO.Compression.FileSystem"><HintPath>$(GameRoot)/Libs/System.IO.Compression.FileSystem.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="netstandard"><HintPath>$(GameRoot)/Beat Saber_Data/Managed/netstandard.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="LocalMusicTests.cs" />
+    <Compile Remove="PlaylistTests.cs" />
+    <Compile Include="../BeatSageApp.cs" Link="BeatSageApp.cs" />
+    <Compile Include="../BeatSageProtocol.cs" Link="BeatSageProtocol.cs" />
+    <Compile Include="$(SharedRoot)/scripts/shared_http_contracts/JsonContractRegistry.cs" Link="Shared/JsonContractRegistry.cs" />
+    <Compile Include="../LocalMusic.cs" Link="LocalMusic.cs" />
+    <Compile Include="../UI/BeatSageText.cs" Link="BeatSageText.cs" />
+    <Compile Include="../../shared_song_import/PackageImporter.cs" Link="PackageImporter.cs" />
+    <Compile Include="$(ContractGeneratedDirectory)/**/*.cs" Condition="'$(ContractGeneratedDirectory)' != '' and Exists('$(ContractGeneratedDirectory)')" />
+    <EmbeddedResource Include="../Contracts/contracts.schema.json">
+      <LogicalName>BeatSage.Contracts.schema.json</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="../Contracts/endpoints.json">
+      <LogicalName>BeatSage.Contracts.endpoints.json</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

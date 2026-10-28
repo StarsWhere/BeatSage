@@ -1,0 +1,14 @@
+{
+  "id": "BeatSageRuntimeSmoke",
+  "name": "Beat Sage runtime checks",
+  "author": "Local",
+  "version": "1.0.0",
+  "gameVersion": "1.45.2",
+  "description": "Finite Beat Sage menu, local audio, and optional generation checks.",
+  "dependsOn": {
+    "BSIPA": "^4.3.5",
+    "BeatSage": "*",
+    "SongCore": "^3.16.0",
+    "BeatSaberMarkupLanguage": "^1.14.0"
+  }
+}
